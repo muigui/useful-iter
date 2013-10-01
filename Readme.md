@@ -59,6 +59,27 @@ The `iterator` Function will receive 5 arguments:
 
 ```
 
+### iter.equal( a:Array|Object, b:Array|Object ):Boolean
+Returns `true` if both `a` and `b` deeply equal each other, `false` otherwise.
+
+#### Example:
+
+```javascript
+
+	var copy = require( 'useful-copy' ),
+		iter = require( 'useful-iter' );
+
+    var foo = { one : 1, two : 2, three : 3 },
+        bar = copy( {}, foo );
+
+    iter.equal( foo, bar ); // returns => true
+
+    bar.four = 4;
+
+    iter.equal( foo, bar ); // returns => false
+
+```
+
 ### iter.len( item:Mixed ):Number
 Tries the returns the `length` property of the passed `item`.
 

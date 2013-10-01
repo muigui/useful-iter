@@ -1,6 +1,14 @@
 	function aggregate( item, accumulator, iterator, ctx ) {
+		if ( typeof iterator !== 'function' ) {
+			if ( typeof accumulator === 'function' ) {
+				iterator    = accumulator;
+				accumulator = [];
+			}
+			else
+				iterator    = k;
+		}
+
 		item     = Object( item );
-		iterator = typeof iterator === 'function' ? iterator : k;
 		ctx      = ctx || item;
 
 		var i, l;
@@ -20,6 +28,40 @@
 		return accumulator;
 	}
 
+	function equal( a, b ) {
+		switch ( Object.prototype.toString.call( a ) ) {
+			case '[object Array]'  : return Array.isArray( b )
+										  ? equal_array( a, b )
+										  : false;
+
+			case '[object Object]' : return Object.prototype.toString.call( b ) == '[object Object]'
+										  ? equal_object( a, b )
+										  : false;
+
+			case '[object Date]'   : return +a == +b;
+		}
+
+		return a == b;
+	}
+
+	function  equal_array( a, b ) {
+		return a.length === b.length
+			&& Array.prototype.slice.call( a ).every( function( v, i ) {
+				return equal( b[i], v );
+			   } );
+	}
+
+	function equal_object( a, b ) {
+		if ( len( a ) !== len( b ) || Object.getOwnPropertyNames( a ).length !== Object.getOwnPropertyNames( b ).length )
+			return false;
+
+		for ( var k in b ) // noinspection JSUnfilteredForInLoop
+			if ( Object.prototype.hasOwnProperty.call( a, k ) !== Object.prototype.hasOwnProperty.call( b, k ) || !equal( a[k], b[k] ) )
+				return false;
+
+		return true;
+	}
+
 	function iter( item ) {
 		return !!( ( item || typeof item === 'string' ) && ( 'length' in Object( item ) || typeof item === 'object' ) );
 	}
@@ -29,7 +71,6 @@
 	function len( item ) {
 		return ( 'length' in ( item = Object( item ) ) ? item : Object.keys( item ) ).length;
 	}
-
 
 	function range( i, j ) {
 		return isNaN( i ) ? range_str( i, j ) : range_num( i, j );
@@ -88,6 +129,8 @@
 
 	module.exports = iter;
 	iter.aggregate = aggregate;
+	iter.equal     = equal;
+	iter.k         = k;
 	iter.len       = len;
 	iter.range     = range;
 	iter.remove    = remove;

@@ -11,5 +11,5 @@
 	"name"         : "useful-iter",
 	"repo"         : "muigui/useful-iter",
 	"scripts"      : ["index.js"],
-	"version"      : "0.0.1"
+	"version"      : "0.0.2"
 }
