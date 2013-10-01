@@ -1,0 +1,33 @@
+{
+	"author"          : {
+		"name"        : "constantology",
+		"email"       : "christos@muigui.com",
+		"url"         : "http://muigui.com"
+	},
+	"description"     : "useful functions for working with Arrays and Objects",
+ 	"devDependencies" : {
+		"chai"                 : "latest",
+		"mocha"                : "latest",
+		"grunt-contrib-concat" : "latest",
+		"grunt-contrib-uglify" : "latest",
+		"grunt-contrib-watch"  : "latest"
+ 	},
+ 	"engines"         : {
+ 		"node"        : ">= 0.8.x"
+ 	},
+	"keywords"        : ["array", "iter", "object"],
+	"licenses"        : [ {
+		"type"        : "MIT",
+		"url"         : "https://raw.github.com/muigui/useful-iter/master/LICENSE"
+	} ],
+	"main"            : "./index.js",
+	"name"            : "useful-iter",
+	"repository"      : {
+		"type"        : "git",
+		"url"         : "git@github.com:muigui/useful-iter.git"
+	},
+	"scripts"         : {
+		"test"        : "mocha -c --ignore-leaks -R spec -u tdd ./test/runner.js"
+	},
+	"version"         : "0.0.1"
+}
