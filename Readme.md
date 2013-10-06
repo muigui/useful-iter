@@ -80,6 +80,19 @@ Returns `true` if both `a` and `b` deeply equal each other, `false` otherwise.
 
 ```
 
+### iter.invoke( items:Array, method:String[, arg1:Mixed, arg2:Mixed, ..., argN:Mixed] ):Array
+Executes the passed `method` — **NOTE:** `method` is a String, and should be the name of `method` that exists on each item in the Array — passing any extra arguments to each method call.
+
+#### Example:
+
+```javascript
+
+    iter.invoke( ['lorem', 'ipsum', 'dolor', 'sit', 'amet'], 'toUpperCase' ); // returns => ["LOREM", "IPSUM", "DOLOR", "SIT", "AMET"]
+
+    iter.invoke( [1, 2, 3, 4, 5, 6, 7, 8] 'toString', 2 );                    // returns => ['1', '10', '11', '100', '101', '110', '111', '1000']
+
+```
+
 ### iter.len( item:Mixed ):Number
 Tries the returns the `length` property of the passed `item`.
 
@@ -97,6 +110,30 @@ Tries the returns the `length` property of the passed `item`.
 
     iter.len( { one : 1, two : 2, three : 3 } ) === Object.keys( { one : 1, two : 2, three : 3 } ).length
     // returns => true
+
+```
+
+### iter.pluck( items:Array, key:String[, only_existing:Boolean] ):Array
+Returns a new Array where all the items are the values of the passed property `key`.
+
+If `only_existing` is set to `true` then all `null` and `undefined` values will be omitted from the returned Array.
+
+**NOTEL** if you want to get at properties deeper than one level down, you can simply supply `the.correct.path`.
+
+#### Example:
+
+```javascript
+
+    var data = [{ data : { value : 'foo' } }, { data : { value : 'bar' } }, {}, { value : 'blim' }, { data : { value : 'blam' } }];
+
+    // harder to read
+    iter.pluck( iter.pluck( data, 'data' ), 'value' ); // returns => ["foo", "bar", undefined, undefined, "blam"]
+
+    // easier on the eye
+    iter.pluck( data, 'data.value' );                  // returns => ["foo", "bar", undefined, undefined, "blam"]
+
+    // return only existing values
+    iter.pluck( data, 'data.value', true );            // returns => ["foo", "bar", "blam"]
 
 ```
 
